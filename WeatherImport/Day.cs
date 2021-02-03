@@ -31,7 +31,24 @@ namespace WeatherImport
 
         public Day(string fileimport)
         {
-            SetAllFields(fileimport);
+            if (string.IsNullOrEmpty(fileimport))
+            {
+                Dy = null;
+            } else {
+                SetAllFields(fileimport);
+            }
+            Console.WriteLine(Dy + ": " + TempDiff());
+        }
+
+        public int? TempDiff()
+        {
+            if (MxT.HasValue && MnT.HasValue)
+            {
+                return MxT - MnT;
+            } else
+            {
+                return null;
+            }
         }
 
         private void SetAllFields(string fi)

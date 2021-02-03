@@ -8,7 +8,7 @@ namespace WeatherImport
 {
     class Month
     {
-        public List<Day> Days { get; set; }
+        public HashSet<Day> Days { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
         public double AvMxT { get; set; } //average?
@@ -28,8 +28,23 @@ namespace WeatherImport
         {
             Title = title;
             Year = year;
-            Days = new List<Day>();
-            Console.WriteLine("Month Added");
+            Days = new HashSet<Day>();
+        }
+
+        public Day FindMinTempDiff()
+        {
+            Day min = new Day(null);
+            foreach (Day d in Days)
+            {
+                if (min.Dy == null && d.TempDiff() != null)
+                {
+                    min = d;
+                } else if (d.TempDiff() != null && d.TempDiff() < min.TempDiff())
+                {
+                    min = d;
+                }
+            }
+            return min;
         }
 
         public void SetFields(string[] cols)
