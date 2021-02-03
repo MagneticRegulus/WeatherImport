@@ -38,14 +38,7 @@ namespace WeatherImport
                             Months.Add(filemonth);
                         } else if (cols[0] == "mo" && cols.Length == 9 && filemonth != null) //add month attributes
                         {
-                            filemonth.AvMxT = Double.Parse(cols[1]);
-                            filemonth.AvMnT = Double.Parse(cols[2]);
-                            filemonth.AvAvT = Double.Parse(cols[3]);
-                            filemonth.TotHDDay = Int32.Parse(cols[4]);
-                            filemonth.AvAvDP = Double.Parse(cols[5]);
-                            filemonth.MnTPcpn = Double.Parse(cols[6]);
-                            filemonth.AvAvSp = Double.Parse(cols[7]);
-                            filemonth.AvSkyC = Double.Parse(cols[8]);
+                            filemonth.SetFields(cols);
                             //debug: Console.WriteLine("Added all columns");
                         } else if (cols[0] != "Dy")
                         {
