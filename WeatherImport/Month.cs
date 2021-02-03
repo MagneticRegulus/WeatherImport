@@ -31,5 +31,17 @@ namespace WeatherImport
             Days = new List<Day>();
             Console.WriteLine("Month Added");
         }
+
+        public void SetFields(string[] cols)
+        {
+            AvMxT = Double.Parse(cols[1]);
+            AvMnT = Double.Parse(cols[2]);
+            AvAvT = Double.Parse(cols[3]);
+            TotHDDay = Int32.Parse(cols[4]);
+            AvAvDP = Double.Parse(cols[5]);
+            MnTPcpn = Double.Parse(cols[6]);
+            AvAvSp = Double.Parse(cols[7]);
+            AvSkyC = Double.Parse(cols[8]);
+        }
     }
 }
