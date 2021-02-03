@@ -20,10 +20,6 @@ namespace WeatherImport
         public double AvAvSp { get; set; } //average?
         public double AvSkyC { get; set; } //average?
 
-        public Day MxTDay { get; set; }
-        public Day MnTDay { get; set; }
-        public Day MxSDay { get; set; }
-
         public Month(string title, int year)
         {
             Title = title;
@@ -36,10 +32,10 @@ namespace WeatherImport
             Day min = new Day(null);
             foreach (Day d in Days)
             {
-                if (min.Dy == null && d.TempDiff() != null)
+                if (!min.Dy.HasValue && d.TempDiff().HasValue)
                 {
                     min = d;
-                } else if (d.TempDiff() != null && d.TempDiff() < min.TempDiff())
+                } else if (d.TempDiff().HasValue && d.TempDiff().Value < min.TempDiff().Value)
                 {
                     min = d;
                 }

@@ -37,7 +37,6 @@ namespace WeatherImport
             } else {
                 SetAllFields(fileimport);
             }
-            Console.WriteLine(Dy + ": " + TempDiff());
         }
 
         public int? TempDiff()

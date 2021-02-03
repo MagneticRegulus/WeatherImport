@@ -9,14 +9,13 @@ namespace WeatherImport
 {
     class Controller
     {
-        public List<Month> Months { get; set; }
+        public HashSet<Month> Months { get; set; }
+        public Month CurrMonth { get; set; }
 
         public Controller()
         {
-            Months = new List<Month>();
-            string filename = System.IO.Path.GetFullPath(Directory.GetCurrentDirectory() + @"\\data\\weather.txt");
-            ReadFile(filename);
-            Console.Read();
+            Months = new HashSet<Month>();
+                      
 
         }
 
@@ -24,7 +23,6 @@ namespace WeatherImport
         {
             try
             {
-                Month filemonth = null;
                 List<string> data = new List<string>();
                 string[] lines = System.IO.File.ReadAllLines(filename);
                 foreach (string curr in lines)
@@ -34,21 +32,21 @@ namespace WeatherImport
                         string[] cols = curr.Trim().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
                         if (cols[0] == "MMU") //add month
                         {
-                            filemonth = new Month(cols[1], Int32.Parse(cols[2]));
-                            Months.Add(filemonth);
-                        } else if (cols[0] == "mo" && cols.Length == 9 && filemonth != null) //add month attributes
+                            CurrMonth = new Month(cols[1], Int32.Parse(cols[2]));
+                            Months.Add(CurrMonth);
+                        } else if (cols[0] == "mo" && cols.Length == 9 && CurrMonth != null) //add month attributes
                         {
-                            filemonth.SetFields(cols);
+                            CurrMonth.SetFields(cols);
                             //debug: Console.WriteLine("Added all columns");
-                        } else if (cols[0] != "Dy")
+                        } else if (cols[0] != "Dy") //created new day
                         {
-                            filemonth.Days.Add(new Day(curr));
+                            CurrMonth.Days.Add(new Day(curr));
                         }
                     }
                 }
                 foreach (Month m in Months)
                 {
-                    Console.WriteLine(m.Title + " " + m.Year + " loaded with " + m.Days.Count + " days");
+                    Console.WriteLine("Weather data for " + m.Title + " " + m.Year + " loaded with " + m.Days.Count + " days");
                 }
 
             } catch (System.Exception e)
@@ -57,12 +55,34 @@ namespace WeatherImport
 
             } finally
             {
-                Console.WriteLine("Done");
+                Console.WriteLine("File Load Complete");
             }
 
             
             
         }
 
+        public void DisplayMinimumDiff()
+        {
+            Day minimum = CurrMonth.FindMinTempDiff();
+            Console.WriteLine(CurrMonth.Title + " " + minimum.Dy.Value + " had the minimum difference in temperature:\n"
+                + "Max Temp: " + minimum.MxT.Value + "\n"
+                + "Min Temp: " + minimum.MnT.Value + "\n"
+                + "Difference: " + minimum.TempDiff().Value);
+
+        }
+
+        public void DisplayAllHDDays()
+        {
+            foreach (Day d in CurrMonth.Days)
+            {
+                if (d.HDDay.HasValue && d.Dy.HasValue)
+                {
+                    Console.WriteLine(CurrMonth.Title + " " + d.Dy.Value + " - HDDay: " + d.HDDay.Value);
+                }
+            }
+        }
+
+        //A Futute state would include an option to search and load information about other months
     }
 }
