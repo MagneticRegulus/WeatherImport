@@ -9,18 +9,20 @@ namespace WeatherImport
     class Month
     {
         public List<Day> Days { get; set; }
-        private double AvMxT { get; set; } //average?
-        private double AvMnT { get; set; } //average?
-        private double AvAvT { get; set; } //average?
-        private int TotHDDay { get; set; } //total?
-        private double AvDP { get; set; } //average?
-        private double MnTPcpn { get; set; } //unclear if total or average
-        private double AvAvSp { get; set; } //average?
-        private double AvSkyC { get; set; } //average?
+        public string MonthName { get; set; }
+        public int Year { get; set; }
+        public double AvMxT { get; set; } //average?
+        public double AvMnT { get; set; } //average?
+        public double AvAvT { get; set; } //average?
+        public int TotHDDay { get; set; } //total?
+        public double AvDP { get; set; } //average?
+        public double MnTPcpn { get; set; } //unclear if total or average
+        public double AvAvSp { get; set; } //average?
+        public double AvSkyC { get; set; } //average?
 
-        private Day MxTDay { get; set; }
-        private Day MnTDay { get; set; }
-        private Day MxSDay { get; set; }
+        public Day MxTDay { get; set; }
+        public Day MnTDay { get; set; }
+        public Day MxSDay { get; set; }
 
         public Month()
         {
